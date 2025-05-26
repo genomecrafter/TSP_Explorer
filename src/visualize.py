@@ -1,72 +1,124 @@
-def visualize_tsp_algorithm(cities, tour, algorithm_name, explored_paths, tour_distance):
-    import streamlit as st
-    import matplotlib.pyplot as plt
-    import time
-    st.subheader(f"🚀 {algorithm_name} Path Exploration")
+import streamlit as st
+import matplotlib.pyplot as plt
+import numpy as np
+import time
 
-    # Initialize session state variables
-    if 'tsp_step' not in st.session_state:
-        st.session_state.tsp_step = 1
-    if 'tsp_playing' not in st.session_state:
-        st.session_state.tsp_playing = False
+from algorithms.nearest import nearest_neighbor
+from algorithms.brute import tsp_brute_force
+from algorithms.ga import genetic_algorithm
+from algorithms.held_karp import held_karp
+from algorithms.ant import aco_tsp
 
+# You can fix a sample set of cities for animation (e.g., 8 cities)
+FIXED_CITIES = np.array([
+    [0, 0],
+    [1, 3],
+    [4, 2],
+    [5, 6],
+    [7, 3],
+    [3, 7],
+    [6, 0],
+    [2, 4]
+])
 
-    # Speed Control
-    speed = st.slider("Speed (lower is faster)", 0.1, 2.0, 0.5, step=0.1)
-
-    # Navigation Buttons
-    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 2, 1])
-    with col1:
-        if st.button("← Prev"):
-            st.session_state.tsp_step = max(1, st.session_state.tsp_step - 1)
-    with col2:
-        if st.button("▶ Play"):
-            st.session_state.tsp_playing = True
-    with col3:
-        if st.button("⏹ Stop"):
-            st.session_state.tsp_playing = False
-    with col4:
-        if st.button("Final Result"):
-            st.session_state.tsp_step = len(tour)
-            st.session_state.tsp_playing = False
-    with col5:
-        if st.button("↻ Reset"):
-            st.session_state.tsp_step = 1
-            st.session_state.tsp_playing = False
-
-    # Function to draw current step
-    def draw_partial_path(step):
-        fig, ax = plt.subplots(figsize=(4, 3), dpi=80)
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.set_title(f"Step {step}/{len(tour)}")
-        for i, (x, y) in enumerate(cities):
-            ax.plot(x, y, 'o', color='orange')
-            ax.text(x, y + 0.01, f'{i}', fontsize=8)
-        for i in range(1, step):
-            c1, c2 = tour[i - 1], tour[i]
-            x_vals = [cities[c1][0], cities[c2][0]]
-            y_vals = [cities[c1][1], cities[c2][1]]
-            ax.plot(x_vals, y_vals, color='orchid', linewidth=2, alpha=0.6)
-        ax.text(0.02, 0.98, f"Paths Explored: {min(explored_paths, step)}/{explored_paths}", fontsize=10,
-                transform=ax.transAxes, bbox=dict(facecolor='peachpuff', edgecolor='black'))
-        ax.text(0.02, 0.92, f"Distance: {tour_distance:.2f} km", fontsize=10,
-                transform=ax.transAxes, bbox=dict(facecolor='peachpuff', edgecolor='black'))
-
-        return fig
-
-    # Animate automatically if playing
-    if st.session_state.tsp_playing:
-        for i in range(st.session_state.tsp_step, len(tour) + 1):
-            fig = draw_partial_path(i)
-            st.pyplot(fig, use_container_width=True)
-            plt.close(fig)  # <-- Add this line
-            st.session_state.tsp_step = i
-            time.sleep(speed)
-            if not st.session_state.tsp_playing or st.session_state.tsp_step >= len(tour):
-                st.session_state.tsp_playing = False
-                break
+# Step generator per algorithm (returns path in steps)
+def get_steps_from_algorithm(name, cities):
+    if name == "Brute Force":
+        path, _ = tsp_brute_force(cities)
+    elif name == "Nearest Neighbor":
+        path, _ = nearest_neighbor(cities)
+    elif name == "Genetic Algorithm":
+        path, _ = genetic_algorithm(cities)
+    elif name == "Held-Karp":
+        path, _ = held_karp(cities)
+    elif name == "Ant Colony Optimization":
+        path, _ = aco_tsp(cities)
     else:
-        fig = draw_partial_path(st.session_state.tsp_step)
-        st.pyplot(fig, use_container_width=False)
-        plt.close(fig)  # <-- Add this line
+        return []
+
+    # Ensure the tour is circular by appending start to end if needed
+    if path[0] != path[-1]:
+        path.append(path[0])
+
+    # Generate step-by-step paths for animation
+    steps = [path[:i + 1] for i in range(len(path))]
+    return steps
+
+
+# Plotting logic
+def plot_path(cities, path, ax):
+    ax.clear()
+    ax.scatter(cities[:, 0], cities[:, 1], c='blue', s=50)
+    for i, (x, y) in enumerate(cities):
+        ax.text(x, y, str(i), fontsize=12, color="black")
+
+    if len(path) > 1:
+        for i in range(len(path) - 1):
+            start = cities[path[i]]
+            end = cities[path[i + 1]]
+            ax.annotate('', xy=end, xytext=start,
+                        arrowprops=dict(arrowstyle='->', color='green', lw=2))
+
+    ax.set_title("TSP Route Animation")
+    ax.set_xlim(-1, np.max(cities[:, 0]) + 2)
+    ax.set_ylim(-1, np.max(cities[:, 1]) + 2)
+
+# Main animation function
+def tsp_animation_interface():
+    st.title("🎞️ TSP Algorithm Route Animation")
+
+    algo = st.selectbox("Choose TSP Algorithm", [
+        "Brute Force",
+        "Nearest Neighbor",
+        "Genetic Algorithm",
+        "Held-Karp",
+        "Ant Colony Optimization"
+    ])
+
+    speed = st.slider("Animation Speed (seconds between steps)", 0.1, 2.0, 0.5, 0.1)
+
+    col1, col2, col3, col4 = st.columns(4)
+    play = col1.button("▶️ Play")
+    stop = col2.button("⏹️ Stop")
+    final = col3.button("🏁 Final Route")
+    reset = col4.button("🔄 Reset")
+
+    if "step_index" not in st.session_state:
+        st.session_state.step_index = 0
+    if "running" not in st.session_state:
+        st.session_state.running = False
+    if "steps" not in st.session_state or reset:
+        st.session_state.steps = get_steps_from_algorithm(algo, FIXED_CITIES)
+        st.session_state.step_index = 0
+        st.session_state.running = False
+
+    if play:
+        st.session_state.running = True
+    if stop:
+        st.session_state.running = False
+    if final:
+        # st.session_state.step_index = len(st.session_state.steps) - 1
+        # st.session_state.running = False
+        st.session_state.playing = False
+        st.session_state.step_index = len(st.session_state.steps) - 1
+        st.rerun()
+        
+    fig, ax = plt.subplots()
+
+    if st.session_state.running:
+        if st.session_state.step_index < len(st.session_state.steps):
+            plot_path(FIXED_CITIES, st.session_state.steps[st.session_state.step_index], ax)
+            st.pyplot(fig)
+            time.sleep(speed)
+            st.session_state.step_index += 1
+            st.rerun()
+        else:
+            st.session_state.running = False  # Stop animation
+            st.session_state.step_index = len(st.session_state.steps) - 1
+            plot_path(FIXED_CITIES, st.session_state.steps[st.session_state.step_index], ax)
+            st.pyplot(fig)
+    else:
+        plot_path(FIXED_CITIES, st.session_state.steps[st.session_state.step_index], ax)
+        st.pyplot(fig)
+
+    

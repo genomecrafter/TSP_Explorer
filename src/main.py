@@ -5,7 +5,7 @@ from algorithms.held_karp import held_karp
 from algorithms.ant import aco_tsp
 from efficiency import display_efficiency
 from graph import show_graphical_analysis
-from visualize import visualize_tsp_algorithm
+from visualize import tsp_animation_interface
 import streamlit as st
 import math
 #st.set_page_config(layout="wide")
@@ -100,31 +100,4 @@ elif tabs == "Graphical Analysis":
     show_graphical_analysis()
 
 elif tabs == "Visualize Steps":
-    algorithm_name = st.selectbox("Select Algorithm", [
-        "Brute Force", "Genetic Algorithm", "Nearest Neighbor", "Held-Karp", "Ant Colony Optimization"
-    ])
-    num_cities = st.slider("Number of Cities", min_value=3, max_value=20, value=5)
-    cities = generate_cities(num_cities)
-    if st.button("Visualize Algorithm"):
-        # Map algorithm name to function and run
-        if algorithm_name == "Brute Force":
-            tour, total_dist = tsp_brute_force(cities)
-            explored_paths = math.factorial(num_cities)
-        elif algorithm_name == "Genetic Algorithm":
-            tour, total_dist = genetic_algorithm(cities)
-            explored_paths = len(tour)  # or set to generations if you want
-        elif algorithm_name == "Nearest Neighbor":
-            tour, total_dist = nearest_neighbor(cities)
-            explored_paths = len(tour)
-        elif algorithm_name == "Held-Karp":
-            tour, total_dist = held_karp(cities)
-            explored_paths = len(tour)
-        elif algorithm_name == "Ant Colony Optimization":
-            tour, total_dist = aco_tsp(cities)
-            explored_paths = len(tour)
-        else:
-            tour, total_dist, explored_paths = [], 0, 0
-        if len(cities) > 10:
-            st.warning("Visualization is limited to 12 cities or fewer for performance reasons.")
-        else:
-            visualize_tsp_algorithm(cities, tour, algorithm_name, explored_paths, total_dist)
+    tsp_animation_interface()
