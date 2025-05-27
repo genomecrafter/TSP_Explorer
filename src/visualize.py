@@ -15,11 +15,13 @@ FIXED_CITIES = np.array([
     [0, 0],
     [1, 3],
     [4, 2],
-    # [5, 6],
-    # [7, 3],
-    # [3, 7],
-    # [6, 0],
+    [5, 6],
+    [7, 3],
+    [3, 7],
+    [6, 0],
     [2, 4]
+
+    # [0.3,3], [1,3], [2.5,2.8],[3,3.2]
 ])
 
 def shrink_line(start, end, shrink=0.25):
@@ -130,21 +132,22 @@ def get_steps_from_algorithm(name, cities):
 
 
 # --- Draw a faint map-like grid or random lines as background ---
-def draw_map_layout(ax, cities):
-    # Option 1: Grid lines
-    x_min, x_max = np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2
-    y_min, y_max = np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2
-    for x in np.linspace(x_min, x_max, 8):
-        ax.plot([x, x], [y_min, y_max], color='#b0c4b1', linewidth=1, alpha=0.25, zorder=1)
-    for y in np.linspace(y_min, y_max, 8):
-        ax.plot([x_min, x_max], [y, y], color='#b0c4b1', linewidth=1, alpha=0.25, zorder=1)
+import matplotlib.image as mpimg
 
-    # Option 2: Random faint "roads" (uncomment to use)
-    # np.random.seed(42)
-    # for _ in range(10):
-    #     x = np.random.uniform(x_min, x_max, 2)
-    #     y = np.random.uniform(y_min, y_max, 2)
-    #     ax.plot(x, y, color='#b0c4b1', linewidth=2, alpha=0.18, zorder=1)
+def draw_map_layout(ax, cities):
+    # Load and display the map image
+    try:
+        img = mpimg.imread("map.jpg")  # Use your image path
+        # Set extent to match your city coordinates (adjust as needed)
+        x_min, x_max = np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2
+        y_min, y_max = np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2
+        ax.imshow(img, extent=[x_min, x_max, y_min, y_max], aspect='auto', zorder=0, alpha=0.6)
+    except FileNotFoundError:
+        # Fallback to grid if image not found
+        for x in np.linspace(x_min, x_max, 8):
+            ax.plot([x, x], [y_min, y_max], color='#b0c4b1', linewidth=1, alpha=0.25, zorder=1)
+        for y in np.linspace(y_min, y_max, 8):
+            ax.plot([x_min, x_max], [y, y], color='#b0c4b1', linewidth=1, alpha=0.25, zorder=1)
 
 # Plotting logic
 def plot_step(cities, step, ax, final_route=False, algo="Brute Force"):
@@ -162,7 +165,7 @@ def plot_step(cities, step, ax, final_route=False, algo="Brute Force"):
 
     # --- Draw city numbers ---
     for i, (x, y) in enumerate(cities):
-        ax.text(x-0.1, y + 0.35, str(i), fontsize=8, color="black", fontweight='bold', ha='center', zorder=12)
+        ax.text(x-0.1, y + 0.4, str(i), fontsize=8, color="black", fontweight='bold', ha='center', zorder=12)
 
     ax.set_xlim(np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2)
     ax.set_ylim(np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2)
@@ -286,5 +289,4 @@ def tsp_animation_interface():
             # For normal steps
             plot_step(FIXED_CITIES, st.session_state.steps[st.session_state.step_index], ax, final_route=False, algo=algo)
             st.pyplot(fig)
-
 
