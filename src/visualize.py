@@ -13,12 +13,12 @@ from algorithms.ant import aco_tsp
 # You can fix a sample set of cities for animation (e.g., 8 cities)
 FIXED_CITIES = np.array([
     [0, 0],
-    [1, 3],
+    #[1, 3],
     [4, 2],
     [5, 6],
     [7, 3],
     [3, 7],
-    [6, 0],
+    #[6, 0],
     [2, 4]
 
     # [0.3,3], [1,3], [2.5,2.8],[3,3.2]
@@ -141,7 +141,15 @@ def draw_map_layout(ax, cities):
         # Set extent to match your city coordinates (adjust as needed)
         x_min, x_max = np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2
         y_min, y_max = np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2
-        ax.imshow(img, extent=[x_min, x_max, y_min, y_max], aspect='auto', zorder=0, alpha=0.6)
+        # ax.imshow(img, extent=[x_min, x_max, y_min, y_max], aspect='auto', zorder=0, alpha=0.6)
+        # Make the image more transparent and less visually dominant
+        ax.imshow(
+            img,
+            extent=[x_min, x_max, y_min, y_max],
+            aspect='equal',      # or 'equal' if your map is square
+            zorder=0,
+            alpha=0.25          # Lower alpha for more transparency
+        )
     except FileNotFoundError:
         # Fallback to grid if image not found
         for x in np.linspace(x_min, x_max, 8):
@@ -218,7 +226,7 @@ def plot_step(cities, step, ax, final_route=False, algo="Brute Force"):
                     s, e = shrink_line(start, end, shrink=0.25)
                     ax.annotate('', xy=e, xytext=s,
                                 arrowprops=dict(arrowstyle='->', color='orange', lw=2, alpha=0.7, linestyle='solid'))
-        ax.set_title(f"{algo}: Current Path")
+        ax.set_title(f"{algo}")
 
     ax.set_xlim(-1, np.max(cities[:, 0]) + 2)
     ax.set_ylim(-1, np.max(cities[:, 1]) + 2)
@@ -231,9 +239,9 @@ def tsp_animation_interface():
     algo = st.selectbox("Choose TSP Algorithm", [
         "Brute Force",
         "Nearest Neighbor",
-        "Genetic Algorithm",
-        "Held-Karp",
-        "Ant Colony Optimization"
+        # "Genetic Algorithm",
+        # "Held-Karp",
+        # "Ant Colony Optimization"
     ])
 
     speed = st.slider("Animation Speed (seconds between steps)", 0.1, 2.0, 0.5, 0.1, key="speed")

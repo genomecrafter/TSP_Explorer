@@ -73,30 +73,68 @@ def genetic_algorithm(cities, pop_size=100, generations=500, mutation_rate=0.02)
     return best,total_distance(best, cities)
 
 
+# def plot_generated_and_best_tour(cities, best_tour):
+#     fig, axs = plt.subplots(2, 1, figsize=(12, 16))
+
+#     x = [city[0] for city in cities]
+#     y = [city[1] for city in cities]
+#     axs[0].scatter(x, y, color='blue')
+#     for i, (x_coord, y_coord) in enumerate(cities):
+#         axs[0].text(x_coord + 5, y_coord + 5, f'{i}', fontsize=9, color='red')
+#     axs[0].set_title("Generated Cities")
+#     axs[0].set_xlabel("X Coordinate")
+#     axs[0].set_ylabel("Y Coordinate")
+#     axs[0].grid(True)
+
+#     tour_path = [cities[i] for i in best_tour] + [cities[best_tour[0]]]
+#     tour_x = [city[0] for city in tour_path]
+#     tour_y = [city[1] for city in tour_path]
+#     axs[1].plot(tour_x, tour_y, 'o-', color='green')
+#     for i, (x_coord, y_coord) in enumerate(cities):
+#         axs[1].text(x_coord + 5, y_coord + 5, f'{i}', fontsize=9, color='red')
+#     axs[1].set_title("Best Tour Found")
+#     axs[1].set_xlabel("X Coordinate")
+#     axs[1].set_ylabel("Y Coordinate")
+#     axs[1].grid(True)
+
+#     plt.tight_layout()
+#     st.pyplot(fig,use_container_width=True)  
+
 def plot_generated_and_best_tour(cities, best_tour):
     fig, axs = plt.subplots(2, 1, figsize=(12, 16))
 
+    # First Plot: Generated Cities
     x = [city[0] for city in cities]
     y = [city[1] for city in cities]
-    axs[0].scatter(x, y, color='blue')
+    axs[0].scatter(x, y, c='dodgerblue', s=80, edgecolors='black', zorder=5)
     for i, (x_coord, y_coord) in enumerate(cities):
-        axs[0].text(x_coord + 5, y_coord + 5, f'{i}', fontsize=9, color='red')
-    axs[0].set_title("Generated Cities")
-    axs[0].set_xlabel("X Coordinate")
-    axs[0].set_ylabel("Y Coordinate")
-    axs[0].grid(True)
+        axs[0].annotate(f'{i}', (x_coord + 5, y_coord + 5), fontsize=9, color='black')
+    axs[0].set_title("Generated Cities", fontsize=16, fontweight='bold')
+    axs[0].set_xlabel("X Coordinate", fontsize=12)
+    axs[0].set_ylabel("Y Coordinate", fontsize=12)
+    axs[0].grid(True, linestyle='--', alpha=0.6)
 
-    tour_path = [cities[i] for i in best_tour] + [cities[best_tour[0]]]
+    # Second Plot: Best Tour Path
+    tour_path = [cities[i] for i in best_tour] + [cities[best_tour[0]]]  # return to start
     tour_x = [city[0] for city in tour_path]
     tour_y = [city[1] for city in tour_path]
-    axs[1].plot(tour_x, tour_y, 'o-', color='green')
+
+    axs[1].plot(tour_x, tour_y, linestyle='-', color='mediumseagreen', linewidth=2.5, zorder=2)
+    axs[1].scatter(tour_x, tour_y, c='tomato', s=80, edgecolors='black', zorder=5)
+
+    # Annotate each city with its index
     for i, (x_coord, y_coord) in enumerate(cities):
-        axs[1].text(x_coord + 5, y_coord + 5, f'{i}', fontsize=9, color='red')
-    axs[1].set_title("Best Tour Found")
-    axs[1].set_xlabel("X Coordinate")
-    axs[1].set_ylabel("Y Coordinate")
-    axs[1].grid(True)
+        axs[1].annotate(f'{i}', (x_coord + 5, y_coord + 5), fontsize=9, color='black')
+
+    # Highlight start and end
+    start_x, start_y = cities[best_tour[0]]
+    axs[1].scatter([start_x], [start_y], c='gold', s=120, label='Start/End', edgecolors='black', zorder=10)
+
+    axs[1].set_title("Best Tour Found", fontsize=16, fontweight='bold')
+    axs[1].set_xlabel("X Coordinate", fontsize=12)
+    axs[1].set_ylabel("Y Coordinate", fontsize=12)
+    axs[1].grid(True, linestyle='--', alpha=0.6)
+    axs[1].legend(loc='upper right')
 
     plt.tight_layout()
-    st.pyplot(fig,use_container_width=True)  
-
+    st.pyplot(fig, use_container_width=True)
