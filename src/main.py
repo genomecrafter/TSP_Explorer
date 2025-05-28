@@ -103,75 +103,75 @@ if tabs == "Home":
     # st.subheader("Design and Analysis of Algorithms")
 
     st.markdown("""
-# Travelling Salesman Problem (TSP) Explorer
+    # Travelling Salesman Problem (TSP) Explorer
 
-Welcome to the **TSP Explorer**, a visual and interactive tool designed to help you understand and compare different algorithms for solving the **Travelling Salesman Problem (TSP)** — a classic problem in computer science and optimization.
+    Welcome to the **TSP Explorer**, a visual and interactive tool designed to help you understand and compare different algorithms for solving the **Travelling Salesman Problem (TSP)** — a classic problem in computer science and optimization.
 
----
-""")
-    st.image("tsp.jpg", caption="The Travelling Salesman Problem", use_container_width=True)
-("""
+    ---
+    """)
+    st.image("images/tsp.png", caption="The Travelling Salesman Problem", use_container_width=True)
+    ("""
 
-## What is the TSP?
+    ## What is the TSP?
 
-The Travelling Salesman Problem asks:
+    The Travelling Salesman Problem asks:
 
-> *"Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"*
+    > *"Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"*
 
-It is a well-known **NP-Hard** problem with real-world applications in:
+    It is a well-known **NP-Hard** problem with real-world applications in:
 
-- Route planning and logistics
-- Manufacturing (circuit board drilling)
-- DNA sequencing
-- Data clustering and more
+    - Route planning and logistics
+    - Manufacturing (circuit board drilling)
+    - DNA sequencing
+    - Data clustering and more
 
----
+    ---
 
-## Algorithms Implemented""")
-st.image("tsp2.png", caption="Algorithms for TSP", use_container_width=True)
-("""
+    ## Algorithms Implemented""")
+    st.image("images/tsp2.png", caption="Algorithms for TSP", use_container_width=True)
+    ("""
 
-This application allows you to explore and visualize how different algorithms attempt to solve the TSP:
+    This application allows you to explore and visualize how different algorithms attempt to solve the TSP:
 
-### 1. **Brute Force**
-- Tries **all possible permutations** of city visits.
-- Guarantees the **optimal solution**.
-- Only feasible for small numbers of cities due to factorial time complexity (**O(n!)**).
+    ### 1. **Brute Force**
+    - Tries **all possible permutations** of city visits.
+    - Guarantees the **optimal solution**.
+    - Only feasible for small numbers of cities due to factorial time complexity (**O(n!)**).
 
-### 2. **Greedy Algorithm**
-- Builds the route by always visiting the **nearest unvisited city**.
-- Fast but **does not guarantee optimality**.
-- Good for quick approximations.
+    ### 2. **Greedy Algorithm**
+    - Builds the route by always visiting the **nearest unvisited city**.
+    - Fast but **does not guarantee optimality**.
+    - Good for quick approximations.
 
-### 3. **Genetic Algorithm**
-- Inspired by **natural selection** and evolution.
-- Uses a population of routes and evolves them over generations.
-- Balances exploration and exploitation.
-- Scales better to **larger inputs**, though not always optimal.
+    ### 3. **Genetic Algorithm**
+    - Inspired by **natural selection** and evolution.
+    - Uses a population of routes and evolves them over generations.
+    - Balances exploration and exploitation.
+    - Scales better to **larger inputs**, though not always optimal.
 
-### 4. **Simulated Annealing (if added)**
-- Inspired by the **annealing process** in metallurgy.
-- Explores solutions probabilistically to escape local minima.
+    ### 4. **Simulated Annealing (if added)**
+    - Inspired by the **annealing process** in metallurgy.
+    - Explores solutions probabilistically to escape local minima.
 
----
+    ---
 
-## Modes of Interaction
+    ## Modes of Interaction
 
-- **Random Coordinates**: Choose the number of cities and let the app generate them randomly.
-- **Manual Input (Canvas Mode#Works on laptops or desktops only)**: Select your own cities on a grid using the drawing tool.
-- **Visualize Steps**: Watch how the algorithm builds or improves the solution step-by-step.
-- **Efficiency Analysis**: Compare execution time and performance across different algorithms.
+    - **Random Coordinates**: Choose the number of cities and let the app generate them randomly.
+    - **Manual Input (Canvas Mode#Works on laptops or desktops only)**: Select your own cities on a grid using the drawing tool.
+    - **Visualize Steps**: Watch how the algorithm builds or improves the solution step-by-step.
+    - **Efficiency Analysis**: Compare execution time and performance across different algorithms.
 
----
+    ---
 
-Enjoy learning about TSP interactively!
+    Enjoy learning about TSP interactively!
 
----
+    ---
 
-### Developed By
-- **Nikita S Raj Kapini**  
-- **Nithyasree Subramanian**
-""")
+    ### Developed By
+    - **Nikita S Raj Kapini**  
+    - **Nithyasree Subramanian**
+    """)
 
 
 if tabs == "Algorithms":

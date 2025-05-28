@@ -139,8 +139,7 @@ def draw_map_layout(ax, cities):
     x_min, x_max = np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2
     y_min, y_max = np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2
     try:
-        img_path = os.path.join(os.path.dirname(__file__), "map.jpg")
-        img = mpimg.imread("map.png")  # Use your image path
+        img = mpimg.imread("imags/map.png")  # Use your image path
         ax.imshow(
             img,
             extent=[x_min, x_max, y_min, y_max],
