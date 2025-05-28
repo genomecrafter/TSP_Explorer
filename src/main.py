@@ -108,6 +108,9 @@ if tabs == "Home":
 Welcome to the **TSP Explorer**, a visual and interactive tool designed to help you understand and compare different algorithms for solving the **Travelling Salesman Problem (TSP)** — a classic problem in computer science and optimization.
 
 ---
+""")
+    st.image("tsp.jpg", caption="The Travelling Salesman Problem", use_container_width=True)
+("""
 
 ## What is the TSP?
 
@@ -124,7 +127,9 @@ It is a well-known **NP-Hard** problem with real-world applications in:
 
 ---
 
-## Algorithms Implemented
+## Algorithms Implemented""")
+st.image("tsp2.png", caption="Algorithms for TSP", use_container_width=True)
+("""
 
 This application allows you to explore and visualize how different algorithms attempt to solve the TSP:
 
