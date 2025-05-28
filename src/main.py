@@ -128,21 +128,29 @@ if tabs == "Home":
     - Tries **all possible permutations** of city visits.
     - Guarantees the **optimal solution**.
     - Only feasible for small numbers of cities due to factorial time complexity (**O(n!)**).
-
-    ### 2. **Greedy Algorithm**
-    - Builds the route by always visiting the **nearest unvisited city**.
-    - Fast but **does not guarantee optimality**.
-    - Good for quick approximations.
-
+    
+    ### 2. **Nearest Neighbor (Greedy)**
+    - Builds the path by always choosing the **nearest unvisited city**.
+    - Very **fast and simple**, suitable for quick approximations.
+    - Does **not guarantee optimality**, and can get stuck in local minima.
+    
     ### 3. **Genetic Algorithm**
-    - Inspired by **natural selection** and evolution.
-    - Uses a population of routes and evolves them over generations.
-    - Balances exploration and exploitation.
-    - Scales better to **larger inputs**, though not always optimal.
-
-    ### 4. **Simulated Annealing (if added)**
-    - Inspired by the **annealing process** in metallurgy.
-    - Explores solutions probabilistically to escape local minima.
+    - Inspired by the principles of **natural selection**.
+    - Maintains a population of routes, applying crossover and mutation to evolve better solutions.
+    - Balances **exploration** (new solutions) and **exploitation** (refining good ones).
+    - Works well for **larger inputs**, though solutions may not be perfectly optimal.
+    
+    ### 4. **Held-Karp Algorithm (Dynamic Programming)**
+    - Solves TSP using **dynamic programming** with bitmasking.
+    - Guarantees an **optimal solution**.
+    - Much faster than brute-force for mid-size inputs, with time complexity **O(n²·2ⁿ)**.
+    - Still impractical for very large numbers of cities.
+    
+    ### 5. **Ant Colony Optimization**
+    - Inspired by the **foraging behavior of ants**.
+    - Simulates a colony of ants leaving pheromones on paths, reinforcing shorter tours.
+    - Uses **probabilistic exploration** and **pheromone updates** to discover good routes.
+    - Suitable for larger inputs; **may not find the optimal** solution but often comes close.
 
     ---
 
