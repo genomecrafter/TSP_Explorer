@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import itertools
+import os
 
 from algorithms.nearest import nearest_neighbor
 from algorithms.brute import tsp_brute_force
@@ -135,14 +136,11 @@ def get_steps_from_algorithm(name, cities):
 import matplotlib.image as mpimg
 
 def draw_map_layout(ax, cities):
-    # Load and display the map image
+    x_min, x_max = np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2
+    y_min, y_max = np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2
     try:
-        img = mpimg.imread("map.jpg")  # Use your image path
-        # Set extent to match your city coordinates (adjust as needed)
-        x_min, x_max = np.min(cities[:, 0]) - 1, np.max(cities[:, 0]) + 2
-        y_min, y_max = np.min(cities[:, 1]) - 1, np.max(cities[:, 1]) + 2
-        # ax.imshow(img, extent=[x_min, x_max, y_min, y_max], aspect='auto', zorder=0, alpha=0.6)
-        # Make the image more transparent and less visually dominant
+        img_path = os.path.join(os.path.dirname(__file__), "map.jpg")
+        img = mpimg.imread("map.png")  # Use your image path
         ax.imshow(
             img,
             extent=[x_min, x_max, y_min, y_max],
