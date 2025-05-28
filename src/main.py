@@ -98,17 +98,13 @@ with st.sidebar:
     tabs = st.radio("Navigation", ["Home","Algorithms", "Efficiency Analysis","Graphical Analysis","Visualize Steps","Play"])
 
 if tabs == "Home":
-    #st.title("TSP Explorer")
-    # st.header("DAA Lab Project – Traveling Salesman Problem")
-    # st.subheader("Design and Analysis of Algorithms")
-
     st.markdown("""
     # Travelling Salesman Problem (TSP) Explorer
 
     Welcome to the **TSP Explorer**, a visual and interactive tool designed to help you understand and compare different algorithms for solving the **Travelling Salesman Problem (TSP)** — a classic problem in computer science and optimization.
 
     ---
-    
+
     ## What is the TSP?
 
     The Travelling Salesman Problem asks:
@@ -153,20 +149,21 @@ if tabs == "Home":
     ## Modes of Interaction
 
     - **Random Coordinates**: Choose the number of cities and let the app generate them randomly.
-    - **Manual Input (Canvas Mode#Works on laptops or desktops only)**: Select your own cities on a grid using the drawing tool.
+    - **Manual Input (Canvas Mode#Works only on Laptop/Despktop)**: Select your own cities on a grid using the drawing tool.
     - **Visualize Steps**: Watch how the algorithm builds or improves the solution step-by-step.
     - **Efficiency Analysis**: Compare execution time and performance across different algorithms.
 
     ---
 
     Enjoy learning about TSP interactively!
-
+    
     ---
-
-    ### Developed By
-    - **Nikita S Raj Kapini**  
-    - **Nithyasree Subramanian**
+        
+    ### Developed By:
+    - Nikita S Raj Kapini
+    - Nithyasree Subramanian
     """)
+
 
 
 if tabs == "Algorithms":
