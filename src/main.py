@@ -108,10 +108,7 @@ if tabs == "Home":
     Welcome to the **TSP Explorer**, a visual and interactive tool designed to help you understand and compare different algorithms for solving the **Travelling Salesman Problem (TSP)** — a classic problem in computer science and optimization.
 
     ---
-    """)
-
-    ("""
-
+    
     ## What is the TSP?
 
     The Travelling Salesman Problem asks:
@@ -127,8 +124,7 @@ if tabs == "Home":
 
     ---
 
-    ## Algorithms Implemented""")
-    ("""
+    ## Algorithms Implemented
 
     This application allows you to explore and visualize how different algorithms attempt to solve the TSP:
 
