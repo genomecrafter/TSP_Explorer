@@ -95,9 +95,9 @@ def display_efficiency(city_coordinates):
                 st.markdown("### 💰 Tour Cost")
                 plot_bar_with_labels("Cost", algo_names, costs, 'salmon')
 
-            if optimal_cost:
-                st.markdown("### 📉 Relative Error (%)")
-                plot_bar_with_labels("Error (%)", algo_names, errors, 'orange')
+            # if optimal_cost:
+            #     st.markdown("### 📉 Relative Error (%)")
+            #     plot_bar_with_labels("Error (%)", algo_names, errors, 'orange')
 
             st.success("Efficiency analysis completed!")
 

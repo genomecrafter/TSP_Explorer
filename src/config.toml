@@ -1,0 +1,9 @@
+# .streamlit/config.toml
+
+[theme]
+base="light"
+primaryColor="#357ABD"  # Matches selected sidebar item
+backgroundColor="#abdbe3"  # Matches main page background
+secondaryBackgroundColor="#1F4E79"  # Matches sidebar and header background
+textColor="#000000"  # You can use white ("#FFFFFF") if using dark theme base
+font="sans serif"

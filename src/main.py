@@ -8,7 +8,6 @@ from graph import show_graphical_analysis
 from visualize import tsp_animation_interface
 import streamlit as st
 import math
-from game import Pygame
 from canvas import canvas
 
 st.set_page_config(
@@ -96,31 +95,78 @@ st.markdown(
 )
 
 with st.sidebar:
-    tabs = st.radio("Navigation", ["Home","Algorithms", "Efficiency Analysis","Graphical Analysis","Visualize Steps","PyGame","Play"])
+    tabs = st.radio("Navigation", ["Home","Algorithms", "Efficiency Analysis","Graphical Analysis","Visualize Steps","Play"])
 
 if tabs == "Home":
-    st.title("TSP Explorer")
+    #st.title("TSP Explorer")
     # st.header("DAA Lab Project – Traveling Salesman Problem")
     # st.subheader("Design and Analysis of Algorithms")
 
     st.markdown("""
-    ### About the Project  
-    This interactive web application explores and compares multiple algorithmic solutions to the classic **Traveling Salesman Problem (TSP)**.  
-    The TSP is a fundamental optimization problem in computer science and operations research. The objective is to find the shortest possible route that visits every city exactly once and returns to the starting point.
+# Travelling Salesman Problem (TSP) Explorer
 
-    In this project, we've implemented and analyzed the following algorithms:
-    - 🔍 **Brute Force** – Exhaustively checks all possible tours (feasible only for small inputs).
-    - 🧬 **Genetic Algorithm** – Uses principles of natural selection to iteratively improve solutions.
-    - 📍 **Nearest Neighbor** – A greedy heuristic that builds a path by always choosing the nearest unvisited city.
-    - 💡 **Held-Karp Algorithm** – A dynamic programming approach offering optimal solutions with reduced complexity.
-    - 🐜 **Ant Colony Optimization** – A probabilistic technique inspired by real-world ant behavior to find near-optimal solutions.
+Welcome to the **TSP Explorer**, a visual and interactive tool designed to help you understand and compare different algorithms for solving the **Travelling Salesman Problem (TSP)** — a classic problem in computer science and optimization.
 
-    This project not only showcases how different strategies approach the same problem but also helps you understand their efficiency, scalability, and trade-offs.
+---
 
-    ### Developed By
-    - **Nikita S Raj Kapini**  
-    - **Nithyasree Subramanian**
-    """)
+## What is the TSP?
+
+The Travelling Salesman Problem asks:
+
+> *"Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?"*
+
+It is a well-known **NP-Hard** problem with real-world applications in:
+
+- Route planning and logistics
+- Manufacturing (circuit board drilling)
+- DNA sequencing
+- Data clustering and more
+
+---
+
+## Algorithms Implemented
+
+This application allows you to explore and visualize how different algorithms attempt to solve the TSP:
+
+### 1. **Brute Force**
+- Tries **all possible permutations** of city visits.
+- Guarantees the **optimal solution**.
+- Only feasible for small numbers of cities due to factorial time complexity (**O(n!)**).
+
+### 2. **Greedy Algorithm**
+- Builds the route by always visiting the **nearest unvisited city**.
+- Fast but **does not guarantee optimality**.
+- Good for quick approximations.
+
+### 3. **Genetic Algorithm**
+- Inspired by **natural selection** and evolution.
+- Uses a population of routes and evolves them over generations.
+- Balances exploration and exploitation.
+- Scales better to **larger inputs**, though not always optimal.
+
+### 4. **Simulated Annealing (if added)**
+- Inspired by the **annealing process** in metallurgy.
+- Explores solutions probabilistically to escape local minima.
+
+---
+
+## Modes of Interaction
+
+- **Random Coordinates**: Choose the number of cities and let the app generate them randomly.
+- **Manual Input (Canvas Mode#Works on laptops or desktops only)**: Select your own cities on a grid using the drawing tool.
+- **Visualize Steps**: Watch how the algorithm builds or improves the solution step-by-step.
+- **Efficiency Analysis**: Compare execution time and performance across different algorithms.
+
+---
+
+Enjoy learning about TSP interactively!
+
+---
+
+### Developed By
+- **Nikita S Raj Kapini**  
+- **Nithyasree Subramanian**
+""")
 
 
 if tabs == "Algorithms":
@@ -194,16 +240,6 @@ elif tabs == "Graphical Analysis":
 
 elif tabs == "Visualize Steps":
     tsp_animation_interface()
-
-elif tabs == "PyGame":
-    st.markdown("""
-    ### Interactive PyGame TSP Solver
-    - **Click** anywhere in the PyGame window to place a city.
-    - Press **↑ (Up Arrow)** to start searching for the shortest route.
-    - Press **C** to clear all cities and start over.
-    """)
-    if st.button("Launch PyGame TSP Solver"):
-        Pygame()
 
 elif tabs == "Play":
     canvas()
