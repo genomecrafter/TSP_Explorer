@@ -109,11 +109,6 @@ if tabs == "Home":
 
     ---
     """)
-    # st.image("images/tsp.png", caption="The Travelling Salesman Problem", use_container_width=True)
-    # from PIL import Image
-
-    # img = Image.open("images/tsp.png")
-    # st.image(img, caption="The Travelling Salesman Problem", use_container_width=True)
 
     ("""
 
@@ -133,8 +128,6 @@ if tabs == "Home":
     ---
 
     ## Algorithms Implemented""")
-    # img_again = Image.open("images/tsp2.png")
-    # st.image(img_again, caption="The Travelling Salesman Problem", use_container_width=True)
     ("""
 
     This application allows you to explore and visualize how different algorithms attempt to solve the TSP:
